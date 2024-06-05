@@ -7,20 +7,54 @@ Vous travaillez pour "FoodieFast", une startup qui souhaite lancer une applicati
 
 1.1. Pourquoi serait-il judicieux pour "FoodieFast" d'adopter des runtimes éphémères pour sa plateforme 
 
+- *Ils minimisent le gaspillage des ressources et une meilleure gestion des coût*
+
 1.2. Comment l'utilisation des runtimes éphémères peut-elle assurer une haute disponibilité lors des pics de commande pendant les heures de repas ?
+
+- *Pendant les pics de demandes, les runtimes peuvent être augmenter dynamiquement, et également les réduire quand la demande baisse*
 
 1.3. Discutez des préoccupations de sécurité potentielles concernant les transactions de paiement et les données des utilisateurs. Comment les runtimes éphémères peuvent-ils aider ou compliquer la situation ?
 
+-*Pour aider*
+    - Réduire la surface d'attaque.
+
+-*Compliquer la situation*
+    - Le controle sur la consomation des ressources
+    - Gestion des secrets.
+    - Gestion des volumes.
+    - Concurrence d'accès aux données.
 
 **Partie 2 : Proposition d'architecture**
 
 2.1. Esquissez une architecture Cloud Native pour l'application "FoodieFast".
 
+    - Conteneurisation et orchestration par kubernetes.
+    - Microservices Metiers:
+        - Menu
+        - Commandes
+        - Paiement
+        - Livraison
+        - Administration
+        - Utilisateur
+        - Authentifications
+    
+    - Microservices d'api Gateway
+    - Microservices de composition
+
+    - Une gestion de bases de données polyglottes
+        
 
 2.2. Expliquez comment chaque microservice contribue à l'efficacité globale et à l'évolutivité de l'application.
-
+    - Menu : *Permet la mise à jour indépendante des menus sans affecter les autres microservices* 
+    - Commandes: *Facilite la scalabilité lors des pics de demande*
+    - Paiement: *Service isolé des autres pour assurer une sécurité et fiabilité des transaction*
+    - Livraison: *Suivre les livraison en temps réel sans surcharger les autres services*
+    - Une resilience globale entre les microservices *!!!!*
 
 2.3. Comment cette architecture supporte-t-elle les déploiements fréquents et la gestion des erreurs ?
+
+    - Déploiements fréquents: Les microservices permettent des déploiements indépendants.
+    - Gestion des erreurs: Les microservices permettent une gestion plus facile des erreurs et des pannes. Les services defaillants peuvent être redémarrés ou un retour en arrière sans affecter le reste de l'application.
 
 **Partie 3 : Le concept des Twelve-Factor App**
 
