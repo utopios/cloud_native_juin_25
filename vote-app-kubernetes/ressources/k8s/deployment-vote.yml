@@ -27,22 +27,22 @@ spec:
             httpGet:
               path: /live
               port: 80
-            initialDeplaySeconds: 5
+            initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /ready
               port: 80
-            initialDeplaySeconds: 5
+            initialDelaySeconds: 5
             periodSeconds: 5
           startupProbe:
             httpGet:
               path: /startup
               port: 80
-            initialDeplaySeconds: 5
+            initialDelaySeconds: 5
             periodSeconds: 5
           resources:
-            request:
+            requests:
               cpu: "100m"
               memory: "128Mi"
             limits:

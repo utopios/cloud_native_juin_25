@@ -1,6 +1,6 @@
 ### Création du cluster avec le mappage des ports avec le host vers le conteneur master du cluster.
 kind create cluster --name tp-kubernetes --config kind/config-kind.yml
-
+# => en sortie, kind génère le default-context
 #build des images 
 #image result
 docker build -t tp-result ../result/.
