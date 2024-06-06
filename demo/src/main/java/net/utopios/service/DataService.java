@@ -28,4 +28,8 @@ public class DataService {
         dataRepository.persistAndFlush(dataContent);
         return dataContent;
     }
+
+    public boolean isLive() {
+        return true;
+    }
 }
