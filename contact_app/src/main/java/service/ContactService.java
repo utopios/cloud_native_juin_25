@@ -48,4 +48,17 @@ public class ContactService {
         contactRepository.persistAndFlush(contact);
         return contact.toDTO();
     }
+
+    public boolean isStarted() {
+        //Logique pour savoir s'il le service est démarré
+        return true;
+    }
+    public boolean isReady() {
+        //Logique pour savoir s'il le service est ready
+        return true;
+    }
+    public boolean isLive() {
+        //Logique pour savoir s'il le service est vivant
+        return true;
+    }
 }
