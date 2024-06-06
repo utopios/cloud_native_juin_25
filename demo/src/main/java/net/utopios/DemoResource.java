@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import net.utopios.entity.DataContent;
 import net.utopios.service.DataService;
 import org.jboss.logging.annotations.Pos;
 
@@ -21,13 +22,20 @@ public class DemoResource {
     }
 
     @GET
-    public List<String> get() {
+    public List<DataContent> get() {
         return dataService.getData();
+    }
+
+    @GET
+    @Path("{id}")
+    //PathParam => à partir du path, QueryParam => à partir de la requete, par defaut c'est à partir du body
+    public int get(@PathParam("id") int id) {
+        return id;
     }
 
 
     @POST
-    public Object post(Object data) {
-        return data;
+    public Object post(DataContent data) {
+        return dataService.post(data);
     }
 }

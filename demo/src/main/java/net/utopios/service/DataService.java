@@ -2,15 +2,30 @@ package net.utopios.service;
 
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Singleton;
+import jakarta.transaction.Transactional;
+import net.utopios.entity.DataContent;
+import net.utopios.repository.DataRepository;
 
 import java.util.Arrays;
 import java.util.List;
 
 @ApplicationScoped
 public class DataService {
-    public List<String> getData() {
-        return Arrays.asList("t1", "t1");
+
+    private final DataRepository dataRepository;
+
+    public DataService(DataRepository dataRepository) {
+        this.dataRepository = dataRepository;
+    }
+
+    public List<DataContent> getData() {
+        return dataRepository.listAll();
+    }
+
+
+    @Transactional
+    public DataContent post(DataContent dataContent) {
+        dataRepository.persistAndFlush(dataContent);
+        return dataContent;
     }
 }
