@@ -302,7 +302,6 @@ spec:
       name: ui
       protocol: TCP
       targetPort: 16686
-      nodePort: 30006
     - port: 14268
       name: thrift
       protocol: TCP
@@ -313,7 +312,7 @@ spec:
       targetPort: 14250
   selector:
     name: jaeger
-  type: NodePort
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service

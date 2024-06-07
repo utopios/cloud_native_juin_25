@@ -41,6 +41,10 @@ create_project_output() {
   echo "-----------------------------------------"
   echo "Creating output for project = $project filename = $filename version_file_name = $version_file_name"
 
+  if [[ ! -d "$project/$OUTPUT_DIR" ]]; then
+    mkdir -p $project/$OUTPUT_DIR
+  fi
+
   if [[ ! -f "$all_apps_output_file" ]]; then
     create_output_file $all_apps_output_file
   fi
@@ -95,6 +99,16 @@ create_project_output() {
       cat rest-heroes/$INPUT_DIR/$infra_input_file_name | sed 's/..\/..\/..\//..\/..\//g' >> $all_apps_output_file
     fi
 
+    if [[ -f "rest-narration/$INPUT_DIR/$infra_input_file_name" ]]; then
+      cat rest-narration/$INPUT_DIR/$infra_input_file_name >> $downstream_project_output_file
+      cat rest-narration/$INPUT_DIR/$infra_input_file_name | sed 's/..\/..\/..\//..\/..\//g' >> $all_apps_output_file
+    fi
+
+    if [[ -f "grpc-locations/$INPUT_DIR/$infra_input_file_name" ]]; then
+      cat grpc-locations/$INPUT_DIR/$infra_input_file_name >> $downstream_project_output_file
+      cat grpc-locations/$INPUT_DIR/$infra_input_file_name | sed 's/..\/..\/..\//..\/..\//g' >> $all_apps_output_file
+    fi
+
     if [[ -f "rest-villains/$INPUT_DIR/$input_file_name" ]]; then
       cat rest-villains/$INPUT_DIR/$input_file_name >> $downstream_project_output_file
       cat rest-villains/$INPUT_DIR/$input_file_name >> $all_apps_output_file
@@ -103,6 +117,16 @@ create_project_output() {
     if [[ -f "rest-heroes/$INPUT_DIR/$input_file_name" ]]; then
       cat rest-heroes/$INPUT_DIR/$input_file_name >> $downstream_project_output_file
       cat rest-heroes/$INPUT_DIR/$input_file_name >> $all_apps_output_file
+    fi
+
+    if [[ -f "rest-narration/$INPUT_DIR/$input_file_name" ]]; then
+      cat rest-narration/$INPUT_DIR/$input_file_name >> $downstream_project_output_file
+      cat rest-narration/$INPUT_DIR/$input_file_name >> $all_apps_output_file
+    fi
+
+    if [[ -f "grpc-locations/$INPUT_DIR/$input_file_name" ]]; then
+      cat grpc-locations/$INPUT_DIR/$input_file_name >> $downstream_project_output_file
+      cat grpc-locations/$INPUT_DIR/$input_file_name >> $all_apps_output_file
     fi
   fi
 }
@@ -123,11 +147,13 @@ rm -rf $OUTPUT_DIR/*.yml
 rm -rf $OUTPUT_DIR/monitoring
 rm -rf deploy/db-init
 
-for project in "rest-villains" "rest-heroes" "rest-fights" "event-statistics" "ui-super-heroes"
+for project in "grpc-locations" "rest-narration" "rest-villains" "rest-heroes" "rest-fights" "event-statistics" "ui-super-heroes"
 do
   rm -rf $project/$OUTPUT_DIR/*.yml
 
-  for kind in "" "native-"
+  kinds=("" "native-")
+
+  for kind in "${kinds[@]}"
   do
     # Keeping this if/else here for the future when we might want to build multiple java versions
     if [[ "$kind" == "native-" ]]; then
