@@ -11,11 +11,17 @@ docker build -f deploy/Dockerfile.native -t quote-microservice-image ./quote/.
 ### Phase 2 Modification des ressources kubernetes générées par le module (quarkus kubernetes)
 
 ### Resource kubernetes
-./author/mvnw install
-cp ./author/target/kubernetes/kubernetes.yml deploy/author-k8s.yml
+cd author
+mvnw install
+cp target/kubernetes/kubernetes.yml ./../deploy/author-k8s.yml
+
+cd ../quote
 
 ./quote/mvnw install
-cp ./quote/target/kubernetes/kubernetes.yml deploy/quote-k8s.yml
+mvnw install
+cp target/kubernetes/kubernetes.yml ./../deploy/quote-k8s.yml
+
+cd ..
 
 ### Phase 3 vérification de la disponibilité d'un cluster kubernetes (localement kind)
 
